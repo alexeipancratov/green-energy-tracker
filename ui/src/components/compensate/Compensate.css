@@ -1,0 +1,11 @@
+.container{
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.cell{
+    padding: 5px;
+}
+.body > div:nth-child(even){
+    background-color: lightcyan;
+}

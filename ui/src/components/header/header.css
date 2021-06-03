@@ -1,0 +1,17 @@
+.header{
+    padding-right: 20px;
+    padding-top: 10px;
+}
+.button{
+    padding: 7px 50px;
+    border-radius: 10px;
+    border: 0px;
+}
+.not-connected{
+    background-color: coral;
+    color: black;
+}
+.connected{
+    background-color: lightgrey;
+    color: gray;
+}
