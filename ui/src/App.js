@@ -20,7 +20,7 @@ function App() {
 
         const erc20Instance = new web3.eth.Contract(
           abi,
-          "0x61922177b4CbFA6A27426e0B62411d9Ba4562EE4"
+          "0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab"
         );
         const gbcBalance = await erc20Instance.methods
           .balanceOf(accounts[0])
@@ -47,28 +47,30 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <header className="App-header">
-          <div>
-            <Link className="nav-link" to="/">
-              Buy GET
-            </Link>
-            <Link className="nav-link" to="/history">
-              GET history
-            </Link>
+      <div className="container">
+        <div className="row">
+          <div className="col-md">
+            <div className="navigation">
+              <Link className="nav-link" to="/">
+                Buy GET
+              </Link>
+              <Link className="nav-link" to="/history">
+                GET history
+              </Link>
+            </div>
+            <Switch>
+              <Route
+                path="/"
+                component={() => <BuyGet balance={balance} events={events} />}
+                exact
+              />
+              <Route
+                path="/history"
+                component={() => <BuyHistory events={events} />}
+              />
+            </Switch>
           </div>
-          <Switch>
-            <Route
-              path="/"
-              component={() => <BuyGet balance={balance} />}
-              exact
-            />
-            <Route
-              path="/history"
-              component={() => <BuyHistory events={events} />}
-            />
-          </Switch>
-        </header>
+        </div>
       </div>
     </BrowserRouter>
   );
