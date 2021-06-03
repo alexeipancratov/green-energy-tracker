@@ -42,3 +42,9 @@ table {
   border-collapse: collapse;
   width: 80%;
 }
+
+a {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 10px;
+}
