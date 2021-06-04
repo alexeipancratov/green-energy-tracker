@@ -15,3 +15,8 @@
     background-color: lightgrey;
     color: gray;
 }
+.position{
+    position: inherit;
+    top: 0;
+    right: 0;
+}

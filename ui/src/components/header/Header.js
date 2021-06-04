@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './header.css';
 
-const Header = ({connect}) => {
+const Header = () => {
+    const [buttonClass, setButtonClass] = useState('btn btn-success position');
     const [disabled, setDisabled] = useState(false);
-    const [buttonClass, setButtonClass] = useState('button not-connected');
+    let web3;
 
-    /*
-    * This function calls a function from parent class who tries to login using metamask.
-    * - If login succedds, the class for button is changed to make it looks like disables and button is
-    * made disabled.
-    * - If login fails, nothing works ahead of it and button remains as it is.
-    */
-    const callConnect = () => {
-        connect().then(() => {
-            console.log('Hurray');
-            setDisabled(true);
-            setButtonClass('button connected');
-        }).catch(error => {
-            console.log('Naaay');
-            setDisabled(false);
-            setButtonClass('button not-connected');
-        });
+    useEffect(() => {
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            let accounts = await web3.eth.getAccounts();
+            console.log(accounts);
+     
+            if(accounts[0]){
+                setDisabled(true);
+                setButtonClass('btn btn-secondary position');
+            }
+        }
+    }, []);
+
+    const connect = () => {
+        window.ethereum.enable().then(data => {
+            const accounts = await web3.eth.getAccounts();
+            console.log(accounts);
+        }).catch(console.error);
+        // connect().then(() => {
+        //     console.log('Hurray');
+        //     setButtonClass('btn btn-secondary position');
+        //     setDisabled(true);
+        // }).catch(error => {
+        //     console.log('Naaay');
+        //     setButtonClass('btn btn-success position');
+        //     setDisabled(false);
+        // });
     }
     return(
         <nav>
             <div className='d-flex flex-row-reverse header'>
-                <button className={buttonClass} disabled={disabled} onClick={callConnect}>Connect to wallet</button>
+            <button onClick={connect} className={buttonClass} disabled={disabled}>
+                Connect to wallet
+            </button>
             </div>
         </nav>
     );
