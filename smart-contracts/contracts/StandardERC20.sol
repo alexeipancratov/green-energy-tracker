@@ -147,10 +147,33 @@ contract StandardERC20 is IERC20 {
     }
     
     function _approve(address owner, address spender, uint256 amount) internal {
-      require(spender != address(0),"ERC20: transfer from zero transfer");
-      require(owner != address(0),"ERC20: transfer from zero transfer");
-      require(_balances[owner] >= amount, "ERC20: owner does not have enough amount");
-      _allowances[owner][spender] = amount;
-      emit Approval(owner, spender, amount);
+        require(spender != address(0),"ERC20: transfer from zero transfer");
+        require(owner != address(0),"ERC20: transfer from zero transfer");
+        require(_balances[owner] >= amount, "ERC20: owner does not have enough amount");
+        _allowances[owner][spender] = amount;
+        emit Approval(owner, spender, amount);
     }
+    function _mint(address account, uint256 amount) internal virtual {
+        require(account != address(0), "ERC20: mint to the zero address");
+
+        _beforeTokenTransfer(address(0), account, amount);
+
+        _totalSupply += amount;
+        _balances[account] += amount;
+        emit Transfer(address(0), account, amount);
+    }
+    function _burn(address account, uint256 amount) internal virtual {
+        require(account != address(0), "ERC20: burn from the zero address");
+
+        _beforeTokenTransfer(account, address(0), amount);
+
+        uint256 accountBalance = _balances[account];
+        require(accountBalance >= amount, "ERC20: burn amount exceeds balance");
+        _balances[account] = accountBalance - amount;
+        _totalSupply -= amount;
+
+        emit Transfer(account, address(0), amount);
+    }
+    
+    function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual { }
 }
