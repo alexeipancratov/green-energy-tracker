@@ -13,7 +13,6 @@ const Header = () => {
         if (window.ethereum) {
             web3 = new Web3(window.ethereum);
             let accounts = await web3.eth.getAccounts();
-            console.log(accounts);
      
             if(accounts[0]){
                 setDisabled(true);
@@ -24,13 +23,13 @@ const Header = () => {
 
     const connect = () => {
         window.ethereum.enable().then(async data => {
-            const accounts = await web3.eth.getAccounts();
-            console.log(accounts);
+            setDisabled(true);
+            setButtonClass('btn btn-secondary position');
         }).catch(console.error);
     }
 
     return(
-        <nav>
+        <nav style={{backgroundColor: 'wheat'}}>
             <div className='d-flex justify-content-between'>
                 <div className='d-flex flex-row header'>
                     <button onClick={() => history.push('/history')} className='btn link'>

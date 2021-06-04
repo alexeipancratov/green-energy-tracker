@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./Compensate.css";
-import abi from "../../contractAbis/erc20Abi.json";
 import Web3 from "web3";
 
 export default function Compensate({instance}) {
   const [getAmount, setGetAmount] = useState("");
   const [balance, setBalance] = useState(0);
   const [events, setEvents] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
   let web3;
   let accounts;
-  const erc20Instance = instance;
+  let erc20Instance = instance;
 
   const loadData = async () => {
+    // if(!erc20Instance) return;
     const gbcBalance = await erc20Instance.methods.balanceOf(accounts[0]).call();
     setBalance(gbcBalance / 1000000000000000000);
 
@@ -37,8 +38,10 @@ export default function Compensate({instance}) {
         accounts = await web3.eth.getAccounts();
  
         if(accounts[0]){
-            clearInterval(checkIfUserLoggedIn);
-            loadData();
+          setLoggedIn(true);
+          console.log(accounts[0]);
+          clearInterval(checkIfUserLoggedIn);
+          loadData();
         }
       }
     }, 1000);
@@ -54,14 +57,28 @@ export default function Compensate({instance}) {
     e.preventDefault();
   };
 
+  const concat = (value) => {
+    const firstPart = value.slice(0, 5);
+    const lastPart = value.slice(value.length-4, value.length);
+    return firstPart + '...' + lastPart;
+  }
+
   return (
     <>
-      <div id="buySection" className="text-center">
-        <p>
-          Balance: <span>{balance} GBC</span>
-        </p>
+      {!loggedIn ? 
+        <div className='mt-2 text-center'>
+          <span className='not-logged'>Please login using <code>metamask</code> to access the platform.</span>
+        </div> : 
+        <div>
+          <div id="buySection" className="text-center">
+        <div className='mb-2 mt-2'>
+          <span className='account balance'>Balance: {balance} GBC</span>
+        </div>
+        <div>
+        <span className='account footprint'>Footprint: {balance} GBC</span>
+        </div><br />
         <form className="buyForm" onSubmit={handleSubmit}>
-          <div className="mb-3">
+          <div className="mb-3 mt-2">
             <label htmlFor="getAmount">GET to pay</label>
             <input
               type="text"
@@ -72,38 +89,46 @@ export default function Compensate({instance}) {
               value={getAmount}
             />
           </div>
-          <button type="submit" className="btn btn-primary mb-3">
+          <button type="submit" className="btn btn-primary form-control mb-3">
             Pay GET
           </button>
         </form>
       </div>
-      <div id="buyHistorySection" className="text-center">
+      <div id="buyHistorySection" className="text-center d-flex mt-4" style={{flexDirection: 'column'}}>
         <h3>Compensate history</h3>
-        {events && events.length > 0 ? (
-          <table className="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th>Event Type</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events?.map((e) => (
-                <tr key={e.id}>
-                  <td>{e.event}</td>
-                  <td>{e.returnValues.from}</td>
-                  <td>{e.returnValues.to}</td>
-                  <td>{e.returnValues.value/(10**18)}</td>
+        <div className='w-75 align-self-center'>
+          {events && events.length > 0 ? (
+            <table className="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Event Type</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Amount</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No events so far...</p>
-        )}
+              </thead>
+              <tbody>
+                {events?.map((e) => (
+                  <tr key={e.id}>
+                    <td>{e.event}</td>
+                    <td data-toggle="tooltip" 
+                      data-placement="top" 
+                      title={e.returnValues.from}>{concat(e.returnValues.from)}</td>
+                    <td data-toggle="tooltip" 
+                      data-placement="top" 
+                      title={e.returnValues.to}>{concat(e.returnValues.to)}</td>
+                    <td>{e.returnValues.value/(10**18)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No events so far...</p>
+          )}
+        </div>
       </div>
+        </div>
+      }
     </>
   );
 }
