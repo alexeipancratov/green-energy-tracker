@@ -6,6 +6,7 @@ export default function Compensate({instance}) {
   const [getAmount, setGetAmount] = useState("");
   const [balance, setBalance] = useState(0);
   const [events, setEvents] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
   let web3;
   let accounts;
   let erc20Instance = instance;
@@ -37,6 +38,7 @@ export default function Compensate({instance}) {
         accounts = await web3.eth.getAccounts();
  
         if(accounts[0]){
+          setLoggedIn(true);
           console.log(accounts[0]);
           clearInterval(checkIfUserLoggedIn);
           loadData();
@@ -63,7 +65,12 @@ export default function Compensate({instance}) {
 
   return (
     <>
-      <div id="buySection" className="text-center">
+      {!loggedIn ? 
+        <div className='mt-2 text-center'>
+          <span className='not-logged'>Please login using <code>metamask</code> to access the platform.</span>
+        </div> : 
+        <div>
+          <div id="buySection" className="text-center">
         <div className='mb-2 mt-2'>
           <span className='account balance'>Balance: {balance} GBC</span>
         </div>
@@ -87,7 +94,7 @@ export default function Compensate({instance}) {
           </button>
         </form>
       </div>
-      <div id="buyHistorySection" className="text-center d-flex" style={{flexDirection: 'column'}}>
+      <div id="buyHistorySection" className="text-center d-flex mt-4" style={{flexDirection: 'column'}}>
         <h3>Compensate history</h3>
         <div className='w-75 align-self-center'>
           {events && events.length > 0 ? (
@@ -120,6 +127,8 @@ export default function Compensate({instance}) {
           )}
         </div>
       </div>
+        </div>
+      }
     </>
   );
 }
