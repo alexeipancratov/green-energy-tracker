@@ -6,5 +6,10 @@
     "ethereum-waffle": "^3.3.0",
     "ethers": "^5.3.0",
     "hardhat": "^2.3.0"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.3.0"
   }
 }

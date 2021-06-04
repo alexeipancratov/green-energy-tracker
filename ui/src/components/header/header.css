@@ -1,0 +1,31 @@
+.header{
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.button{
+    padding: 7px 50px;
+    border-radius: 10px;
+    border: 0px;
+}
+.not-connected{
+    background-color: coral;
+    color: black;
+}
+.connected{
+    background-color: lightgrey;
+    color: gray;
+}
+.position{
+    position: inherit;
+    top: 0;
+    right: 0;
+}
+.link{
+    position: inherit;
+    top: 0;
+    right: 0;
+}
+.link:hover {
+    background-color: lightgreen;
+}

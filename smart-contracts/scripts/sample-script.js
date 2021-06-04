@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const StandardErc20 = await hre.ethers.getContractFactory("StandardERC20");
-  const standardErc20 = await StandardErc20.deploy("GBC Token", "GBC", 100000000000000000000);
+  const standardErc20 = await StandardErc20.deploy("GBC Token", "GBC", '100000000000000000000');
 
   await standardErc20.deployed();
 
