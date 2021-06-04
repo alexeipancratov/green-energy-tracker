@@ -55,5 +55,4 @@ contract GreenEnergyToken is StandardERC20{
         emit Compensate(msg.sender,footprintGenerated[msg.sender], amount);
     }
 
-
 }
