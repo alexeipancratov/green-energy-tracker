@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./Compensate.css";
+import abi from "../../contractAbis/erc20Abi.json";
+import Web3 from "web3";
 
-export default function Compensate() {
+export default function Compensate({instance}) {
   const [getAmount, setGetAmount] = useState("");
   const [balance, setBalance] = useState(0);
   const [events, setEvents] = useState([]);
   let web3;
+  let accounts;
+  const erc20Instance = instance;
 
   const loadData = async () => {
     const gbcBalance = await erc20Instance.methods.balanceOf(accounts[0]).call();
@@ -30,13 +34,13 @@ export default function Compensate() {
     const checkIfUserLoggedIn = setInterval(async () => {
       if (window.ethereum) {
         web3 = new Web3(window.ethereum);
-        let accounts = await web3.eth.getAccounts();
+        accounts = await web3.eth.getAccounts();
  
         if(accounts[0]){
             clearInterval(checkIfUserLoggedIn);
             loadData();
         }
-    }
+      }
     }, 1000);
   }, []);
 
