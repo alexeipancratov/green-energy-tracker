@@ -1,9 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./buyGet.css";
 
 export default function BuyGet(props) {
   const [ethAmount, setEthAmount] = useState("");
   const [getAmount, setGetAmount] = useState("");
+  const [buyEvents, setBuyEvents] = useState([]);
+
+  useEffect(() => {
+    const func = async () => {
+      props.instance.events.Buy(
+        {},
+        { fromBlock: 0, to: "latest" },
+        (err, event) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(event);
+            setBuyEvents((events) => [...events, event]);
+          }
+        }
+      );
+    };
+    func();
+  }, [props.instance]);
 
   const onEthAmountChange = (e) => {
     const ethAmount = e.target.value;
@@ -17,10 +36,44 @@ export default function BuyGet(props) {
 
     setEthAmount(getAmount);
     setGetAmount(getAmount);
+
+    // Debug
+    const func = async () => {
+      const decimals = await props.instance.methods.decimals().call();
+      console.log(decimals);
+
+      const getAmountUnits = getAmount * Math.pow(10, decimals);
+      console.log(getAmountUnits);
+    };
+    func();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const func = async () => {
+      const tokenDecimals = await props.instance.methods.decimals().call();
+      console.log(tokenDecimals);
+      const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
+      console.log(getAmountUnits);
+      const ethAmountUnits = props.web3.utils.toWei(ethAmount, "ether");
+
+      props.instance.methods
+        .buy(props.account, getAmountUnits.toString())
+        .send({
+          from: props.account,
+          value: ethAmountUnits,
+        })
+        .on("receipt", (receipt) => {
+          console.log("=== Receipt ===");
+          console.log(receipt);
+          alert(`Transaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`);
+
+          setEthAmount("");
+          setGetAmount("");
+        });
+    };
+    func();
   };
 
   return (
@@ -60,21 +113,21 @@ export default function BuyGet(props) {
       </div>
       <div id="buyHistorySection">
         <h3>Buy history</h3>
-        {props.events && props.events.length > 0 ? (
+        {buyEvents && buyEvents.length > 0 ? (
           <table className="table table-striped table-hover">
             <thead>
               <tr>
-                <th>Event Type</th>
-                <th>From</th>
                 <th>To</th>
+                <th>Footprint at time of purchase</th>
+                <th>Amount (units)</th>
               </tr>
             </thead>
             <tbody>
-              {props.events?.map((e) => (
+              {buyEvents?.map((e) => (
                 <tr key={e.id}>
-                  <td>{e.event}</td>
-                  <td>{e.raw.topics[1]}</td>
-                  <td>{e.raw.topics[2]}</td>
+                  <td>{e.returnValues.to}</td>
+                  <td>{e.returnValues.footPrint}</td>
+                  <td>{e.returnValues.amount}</td>
                 </tr>
               ))}
             </tbody>
