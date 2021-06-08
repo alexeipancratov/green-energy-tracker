@@ -10,14 +10,29 @@ import "./StandardERC20.sol";
 contract GreenEnergyToken is StandardERC20{
 
     /// @notice Current state of carbon emissions from a company
-    /// @dev State varible to track the companie's footprint
+    /// @dev State varible to track the company's footprint
     mapping(address => uint) footprintGenerated;
-
-    constructor() StandardERC20("Green Energy Token", "GET", 10000){}
+    
+    /// @notice approved IOT devices of company
+    /// @dev State varible to track the company's iot address
+    mapping(address=>address) approvedIot;
+    
+    address public owner;
+    
+    constructor() StandardERC20("Green Energy Token", "GET", 100000000000000000000){
+        owner = msg.sender;
+    }
 
     /// @notice Modifier used to restrict the permission to the owner of the contract.  
     modifier onlyOwner(){
-        require(msg.sender == address(this));
+        require(msg.sender == owner);
+        _;
+    }
+
+    modifier onlyIOT(address company){
+        address caller = msg.sender;
+        address toVerify = approvedIot[company];
+        require(msg.sender == approvedIot[company]);
         _;
     }
 
@@ -33,7 +48,9 @@ contract GreenEnergyToken is StandardERC20{
     /// @param amount amount of tokens requested to be compensated
     event Compensate(address indexed to, uint indexed footPrint, uint indexed amount);
 
-    
+    /// @notice Create new tokens and store it in smart contract
+    /// @dev calls the _mint function from standard ERC20
+    /// @param amount specifies the amount of token to be newly minted
     function mint(uint amount) public onlyOwner{
         _mint(address(this), amount);
     }
@@ -41,18 +58,29 @@ contract GreenEnergyToken is StandardERC20{
     function addFootprint(address company,uint footprint) public  {
         footprintGenerated[company] += footprint;
     }
-
-    function buy(address to, uint amount)public payable{
-        require(msg.value == amount*(10**18));
-        transferFrom(address(this), to, amount);
-        emit Buy(to,footprintGenerated[to],amount);
+    
+    function getFootPrint(address company) public view returns(uint){
+        return footprintGenerated[company];
+    }
+    
+    function buy(uint amount)public payable{
+        require(msg.value == amount);
+        _transfer(address(this), msg.sender,amount);
+        emit Buy(msg.sender,footprintGenerated[msg.sender],amount);
     }
 
-    function compensate(uint amount) public {        
-        require(balanceOf(msg.sender)>= amount);
-        _burn(msg.sender,amount);
-        footprintGenerated[msg.sender] -=amount;
-        emit Compensate(msg.sender,footprintGenerated[msg.sender], amount);
+    function compensate(address company, uint amount) public onlyIOT(company){        
+        require(balanceOf(company)>= amount);
+        transferFrom(company,owner,amount);
+        _burn(company,amount);
+        footprintGenerated[company] -=amount;
+        emit Compensate(company,footprintGenerated[company], amount);
+    }
+
+    function approveIot(address spender, uint amount) public{
+        bool isApproved = approve(spender,amount);
+        if(isApproved)
+            approvedIot[msg.sender]=spender;
     }
 
 }
