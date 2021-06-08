@@ -7,18 +7,21 @@ import "./StandardERC20.sol";
 /// @author BlockExplorers
 /// @notice This token is used in tokenize the energy assest from green energy producer
 /// @dev Implements the ERC20 Contract
-contract GreenEnergyToken is StandardERC20{
+contract GreenEnergyToken is StandardERC20 {
+    address private owner;
+
+    /// @notice Modifier used to restrict the permission to the owner of the contract.  
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
 
     /// @notice Current state of carbon emissions from a company
     /// @dev State varible to track the companie's footprint
-    mapping(address => uint) footprintGenerated;
+    mapping(address => uint) public footprintGenerated;
 
-    constructor() StandardERC20("Green Energy Token", "GET", 10000){}
-
-    /// @notice Modifier used to restrict the permission to the owner of the contract.  
-    modifier onlyOwner(){
-        require(msg.sender == address(this));
-        _;
+    constructor() StandardERC20("Green Energy Token", "GET", 100000000000000000000) {
+        owner = msg.sender;
     }
 
     /// @notice To generate Event for Buy Action
@@ -32,27 +35,25 @@ contract GreenEnergyToken is StandardERC20{
     /// @param to address of the Token holder(company)
     /// @param amount amount of tokens requested to be compensated
     event Compensate(address indexed to, uint indexed footPrint, uint indexed amount);
-
     
-    function mint(uint amount) public onlyOwner{
+    function mint(uint amount) public onlyOwner {
         _mint(address(this), amount);
     }
 
-    function addFootprint(address company,uint footprint) public  {
+    function addFootprint(address company,uint footprint) public {
         footprintGenerated[company] += footprint;
     }
 
-    function buy(address to, uint amount)public payable{
-        require(msg.value == amount*(10**18));
-        transferFrom(address(this), to, amount);
-        emit Buy(to,footprintGenerated[to],amount);
+    function buy(address to, uint amount) public payable {
+        require(msg.value == amount, "Failed comparison");
+        _transfer(address(this), to, amount);
+        emit Buy(to, footprintGenerated[to], amount);
     }
 
-    function compensate(uint amount) public {        
+    function compensate(uint amount) public {
         require(balanceOf(msg.sender)>= amount);
-        _burn(msg.sender,amount);
+        _burn(msg.sender, amount);
         footprintGenerated[msg.sender] -=amount;
-        emit Compensate(msg.sender,footprintGenerated[msg.sender], amount);
+        emit Compensate(msg.sender, footprintGenerated[msg.sender], amount);
     }
-
 }

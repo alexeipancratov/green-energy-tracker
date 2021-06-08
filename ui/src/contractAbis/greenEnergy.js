@@ -1,4 +1,6 @@
-[
+export const GREEN_ENERGY_CONTRACT_ADDRESS = "0xe8E28b8022B0346342F4484F655f95C9936CF14A";
+
+export const GREEN_ENERGY_TOKEN_ABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -409,4 +411,4 @@
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-]
+];

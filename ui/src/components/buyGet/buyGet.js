@@ -79,9 +79,6 @@ export default function BuyGet(props) {
   return (
     <>
       <div id="buySection" className="text-center">
-        <p>
-          Balance: <span>{props.balance} GBC</span>
-        </p>
         <form className="buyForm" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="ethAmount">ETH to spend</label>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import "./App.css";
-import abi from './contractAbis/erc20Abi.json';
+import { GREEN_ENERGY_CONTRACT_ADDRESS, GREEN_ENERGY_TOKEN_ABI } from './contractAbis/greenEnergy';
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import BuyGet from "./components/buyGet/buyGet";
 import Header from './components/header/Header';
@@ -21,8 +21,8 @@ function App() {
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
 
-        const erc20Instance = new web3.eth.Contract(abi, "0x07a457d878BF363E0Bb5aa0B096092f941e19962");
-        setInstance(erc20Instance);
+        const getInstance = new web3.eth.Contract(GREEN_ENERGY_TOKEN_ABI, GREEN_ENERGY_CONTRACT_ADDRESS);
+        setInstance(getInstance);
       }
     }
 
