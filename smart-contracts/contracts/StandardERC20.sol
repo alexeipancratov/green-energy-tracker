@@ -93,7 +93,7 @@ contract StandardERC20 is IERC20 {
         _symbol = symbol_;
         _decimals = 18; // 1 ether  = 10^18 wei
         _totalSupply = totalSupply_;
-        _balances[address(this)] = _balances[address(this)] + totalSupply_;
+        _balances[msg.sender] = _balances[msg.sender] + totalSupply_;
         emit Transfer(address(0),msg.sender,_totalSupply);
     }
     
