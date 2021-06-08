@@ -49,7 +49,7 @@ export default function BuyGet(props) {
       const ethAmountUnits = props.web3.utils.toWei(ethAmount, "ether");
 
       props.instance.methods
-        .buy(props.account, getAmountUnits.toString())
+        .buy(getAmountUnits.toString())
         .send({
           from: props.account,
           value: ethAmountUnits,
