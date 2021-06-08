@@ -36,16 +36,6 @@ export default function BuyGet(props) {
 
     setEthAmount(getAmount);
     setGetAmount(getAmount);
-
-    // Debug
-    const func = async () => {
-      const decimals = await props.instance.methods.decimals().call();
-      console.log(decimals);
-
-      const getAmountUnits = getAmount * Math.pow(10, decimals);
-      console.log(getAmountUnits);
-    };
-    func();
   };
 
   const handleSubmit = (e) => {
