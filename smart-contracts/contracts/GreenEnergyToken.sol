@@ -19,7 +19,7 @@ contract GreenEnergyToken is StandardERC20{
     
     address public owner;
     
-    constructor() StandardERC20("Green Energy Token", "GET", 10000){
+    constructor() StandardERC20("Green Energy Token", "GET", 100000000000000000000){
         owner = msg.sender;
     }
 
@@ -52,7 +52,7 @@ contract GreenEnergyToken is StandardERC20{
     /// @dev calls the _mint function from standard ERC20
     /// @param amount specifies the amount of token to be newly minted
     function mint(uint amount) public onlyOwner{
-        _mint(owner, amount);
+        _mint(address(this), amount);
     }
 
     function addFootprint(address company,uint footprint) public  {
@@ -64,8 +64,8 @@ contract GreenEnergyToken is StandardERC20{
     }
     
     function buy(uint amount)public payable{
-        require(msg.value == amount*(10**18));
-        _transfer(owner, msg.sender,amount);
+        require(msg.value == amount);
+        _transfer(address(this), msg.sender,amount);
         emit Buy(msg.sender,footprintGenerated[msg.sender],amount);
     }
 
