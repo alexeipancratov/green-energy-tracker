@@ -87,25 +87,6 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 			{
 				"indexed": true,
 				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
 				"name": "from",
 				"type": "address"
 			},
@@ -195,6 +176,24 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "approveIot",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "account",
 				"type": "address"
 			}
@@ -213,11 +212,6 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
 				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
@@ -230,6 +224,11 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 	},
 	{
 		"inputs": [
+			{
+				"internalType": "address",
+				"name": "company",
+				"type": "address"
+			},
 			{
 				"internalType": "uint256",
 				"name": "amount",
@@ -258,11 +257,11 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "",
+				"name": "company",
 				"type": "address"
 			}
 		],
-		"name": "footprintGenerated",
+		"name": "getFootPrint",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -310,13 +309,6 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -395,19 +387,6 @@ export const GREEN_ENERGY_TOKEN_ABI = [
 				"type": "bool"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
