@@ -96,9 +96,11 @@ What about edge conditions?
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+**Client:** React, Web3.js, Bootstrap 5
 
-**Server:** Node, Express
+**Smart Contract:** Solidity
+
+**Blockchain:** Ethereum
 
 ## Run Locally
 
