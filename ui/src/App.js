@@ -30,7 +30,6 @@ function App() {
           GREEN_ENERGY_CONTRACT_ADDRESS
         );
         setInstance(getInstance);
-        console.log(getInstance);
       }
     };
 

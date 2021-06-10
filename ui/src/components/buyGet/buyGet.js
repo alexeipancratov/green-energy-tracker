@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import "./buyGet.css";
 import { getShortAddress } from "../../utils/addressUtils";
 
-export default function BuyGet(props) {
+export default function BuyGet({instance, account, web3}) {
   const [ethAmount, setEthAmount] = useState("");
   const [getAmount, setGetAmount] = useState("");
   const [buyEvents, setBuyEvents] = useState([]);
 
   useEffect(() => {
     const func = async () => {
-      props.instance.events.Buy(
+      instance.events.Buy(
         {},
         { fromBlock: 0, to: "latest" },
         (err, event) => {
           if (err) {
             console.log(err);
           } else {
-            setBuyEvents((events) => [...events, event]);
+            if (event.returnValues.to === account) {
+              setBuyEvents((events) => [...events, event]);
+            }
           }
         }
       );
     };
     func();
-  }, [props.instance]);
+  }, [instance.events, account]);
 
   const onEthAmountChange = (e) => {
     const ethAmount = e.target.value;
@@ -42,14 +44,14 @@ export default function BuyGet(props) {
     e.preventDefault();
 
     const func = async () => {
-      const tokenDecimals = await props.instance.methods.decimals().call();
+      const tokenDecimals = await instance.methods.decimals().call();
       const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
-      const ethAmountUnits = props.web3.utils.toWei(ethAmount, "ether");
+      const ethAmountUnits = web3.utils.toWei(ethAmount, "ether");
 
-      props.instance.methods
+      instance.methods
         .buy(getAmountUnits.toString())
         .send({
-          from: props.account,
+          from: account,
           value: ethAmountUnits,
         })
         .on("receipt", (receipt) => {
