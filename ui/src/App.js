@@ -16,7 +16,7 @@ function App() {
       let web3;
       if (window.ethereum) {
         web3 = new Web3(window.ethereum);
-        let erc20Instance = new web3.eth.Contract(abi, "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+        let erc20Instance = new web3.eth.Contract(abi, "0xa719E8F91858Aa11D5D746cEFe47b137fd517B7c");
         setInstance(erc20Instance);
       }
     }
