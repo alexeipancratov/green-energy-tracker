@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./buyGet.css";
+import { getShortAddress } from "../../utils/addressUtils";
 
 export default function BuyGet(props) {
   const [ethAmount, setEthAmount] = useState("");
@@ -118,7 +119,7 @@ export default function BuyGet(props) {
             <tbody>
               {buyEvents?.map((e) => (
                 <tr key={e.id}>
-                  <td>{e.returnValues.to}</td>
+                  <td>{getShortAddress(e.returnValues.to)}</td>
                   <td>{e.returnValues.footPrint}</td>
                   <td>{e.returnValues.amount}</td>
                   <td>{`${e.returnValues.amount / Math.pow(10, 18)} GET`}</td>
