@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./buyGet.css";
+import { getShortAddress } from "../../utils/addressUtils";
 
 export default function BuyGet(props) {
   const [ethAmount, setEthAmount] = useState("");
@@ -15,7 +16,6 @@ export default function BuyGet(props) {
           if (err) {
             console.log(err);
           } else {
-            console.log(event);
             setBuyEvents((events) => [...events, event]);
           }
         }
@@ -43,9 +43,7 @@ export default function BuyGet(props) {
 
     const func = async () => {
       const tokenDecimals = await props.instance.methods.decimals().call();
-      console.log(tokenDecimals);
       const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
-      console.log(getAmountUnits);
       const ethAmountUnits = props.web3.utils.toWei(ethAmount, "ether");
 
       props.instance.methods
@@ -55,9 +53,9 @@ export default function BuyGet(props) {
           value: ethAmountUnits,
         })
         .on("receipt", (receipt) => {
-          console.log("=== Receipt ===");
-          console.log(receipt);
-          alert(`Transaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`);
+          alert(
+            `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`
+          );
 
           setEthAmount("");
           setGetAmount("");
@@ -68,53 +66,63 @@ export default function BuyGet(props) {
 
   return (
     <>
-      <div id="buySection" className="text-center">
-        <form className="buyForm" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="ethAmount">ETH to spend</label>
-            <input
-              type="text"
-              className="form-control"
-              id="ethAmount"
-              aria-describedby="emailHelp"
-              placeholder="0.00"
-              onChange={onEthAmountChange}
-              value={ethAmount}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="getAmount">GET to receive</label>
-            <input
-              type="text"
-              className="form-control"
-              id="getAmount"
-              placeholder="0.00"
-              onChange={onGetAmountChange}
-              value={getAmount}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Buy GET
-          </button>
-        </form>
-      </div>
+      <section className="col text-center">
+        <h2>Buy GET tokens</h2>
+      </section>
+      <section id="buySection" className="row">
+        <section id="buyGetFormSection" className="col text-center">
+          <form className="buyForm" onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="ethAmount">ETH to spend</label>
+              <input
+                type="text"
+                className="form-control"
+                id="ethAmount"
+                aria-describedby="emailHelp"
+                placeholder="0.00"
+                onChange={onEthAmountChange}
+                value={ethAmount}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="getAmount">GET to receive</label>
+              <input
+                type="text"
+                className="form-control"
+                id="getAmount"
+                placeholder="0.00"
+                onChange={onGetAmountChange}
+                value={getAmount}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Buy GET
+            </button>
+          </form>
+        </section>
+        <section className="col text-center">
+          <img src="img/buy.png" alt="green" width="600" />
+        </section>
+      </section>
       <div id="buyHistorySection">
         <h3>Buy history</h3>
         {buyEvents && buyEvents.length > 0 ? (
-          <table className="table table-striped table-hover">
+          <table className="history-table table table-hover">
             <thead>
               <tr>
-                <th>To</th>
+                <th>Receiver</th>
                 <th>Footprint at time of purchase</th>
-                <th>Amount (units)</th>
+                <th>GET Amount (units)</th>
+                <th>GET Amount</th>
               </tr>
             </thead>
             <tbody>
               {buyEvents?.map((e) => (
                 <tr key={e.id}>
-                  <td>{e.returnValues.to}</td>
+                  <td>{getShortAddress(e.returnValues.to)}</td>
                   <td>{e.returnValues.footPrint}</td>
                   <td>{e.returnValues.amount}</td>
+                  <td>{`${e.returnValues.amount / Math.pow(10, 18)} GET`}</td>
                 </tr>
               ))}
             </tbody>

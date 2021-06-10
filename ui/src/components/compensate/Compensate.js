@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "./Compensate.css";
 import Web3 from "web3";
+import { getShortAddress } from "../../utils/addressUtils";
+import "./Compensate.css";
 
 export default function Compensate({instance}) {
   const [getAmount, setGetAmount] = useState("");
@@ -57,12 +58,6 @@ export default function Compensate({instance}) {
     e.preventDefault();
   };
 
-  const concat = (value) => {
-    const firstPart = value.slice(0, 5);
-    const lastPart = value.slice(value.length-4, value.length);
-    return firstPart + '...' + lastPart;
-  }
-
   return (
     <>
       {!loggedIn ? 
@@ -113,10 +108,10 @@ export default function Compensate({instance}) {
                     <td>{e.event}</td>
                     <td data-toggle="tooltip" 
                       data-placement="top" 
-                      title={e.returnValues.from}>{concat(e.returnValues.from)}</td>
+                      title={e.returnValues.from}>{getShortAddress(e.returnValues.from)}</td>
                     <td data-toggle="tooltip" 
                       data-placement="top" 
-                      title={e.returnValues.to}>{concat(e.returnValues.to)}</td>
+                      title={e.returnValues.to}>{getShortAddress(e.returnValues.to)}</td>
                     <td>{e.returnValues.value/(10**18)}</td>
                   </tr>
                 ))}

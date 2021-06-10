@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import "./App.css";
-import { GREEN_ENERGY_CONTRACT_ADDRESS, GREEN_ENERGY_TOKEN_ABI } from './contractAbis/greenEnergy';
+import {
+  GREEN_ENERGY_CONTRACT_ADDRESS,
+  GREEN_ENERGY_TOKEN_ABI,
+} from "./contractAbis/greenEnergy";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import BuyGet from "./components/buyGet/buyGet";
-import Header from './components/header/Header';
-import Compensate from './components/compensate/Compensate';
+import Header from "./components/header/Header";
+import Compensate from "./components/compensate/Compensate";
 
 function App() {
   const [instance, setInstance] = useState();
@@ -21,29 +24,40 @@ function App() {
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
 
-        const getInstance = new web3.eth.Contract(GREEN_ENERGY_TOKEN_ABI, GREEN_ENERGY_CONTRACT_ADDRESS);
+        const getInstance = new web3.eth.Contract(
+          GREEN_ENERGY_TOKEN_ABI,
+          GREEN_ENERGY_CONTRACT_ADDRESS
+        );
         setInstance(getInstance);
       }
-    }
+    };
 
     createInstance();
   }, []);
-    
+
   return (
     <BrowserRouter>
-      <div>
-          <Header />
-          {!instance ? null : <Switch>
+      <Header />
+      <div className="container">
+        {!instance ? null : (
+          <Switch>
             <Route
               path="/"
-              component={() => <BuyGet instance={instance} web3={web3Instance} account={account}/>}
+              component={() => (
+                <BuyGet
+                  instance={instance}
+                  web3={web3Instance}
+                  account={account}
+                />
+              )}
               exact
             />
             <Route
               path="/compensate"
-              component={() => <Compensate instance={instance}/>}
+              component={() => <Compensate instance={instance} />}
             />
-          </Switch>}
+          </Switch>
+        )}
       </div>
     </BrowserRouter>
   );
