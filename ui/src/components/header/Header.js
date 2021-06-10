@@ -3,10 +3,13 @@ import "./header.css";
 import Web3 from "web3";
 import { useHistory } from "react-router-dom";
 
-const Header = ({instance, web3, account}) => {
+const Header = ({instance, web3}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
+  const [account, setAccount] = useState('');
+  const [balance, setBalance] = useState(0);
+  const [footprint, setFootprint] = useState(0);
 
   useEffect(() => {
     const func = async () => {
@@ -15,6 +18,7 @@ const Header = ({instance, web3, account}) => {
         let accounts = await web3.eth.getAccounts();
 
         if (accounts[0]) {
+          setAccount(accounts[0]);
           setDisabled(true);
           setButtonClass("btn btn-secondary position");
         }
@@ -23,6 +27,20 @@ const Header = ({instance, web3, account}) => {
 
     func();
   }, []);
+
+  useEffect(() => {
+    if(account === '') return;
+    const getBalanceAndFootprint = async () => {
+      console.log(account);
+      const _balance = await instance.methods.balanceOf(account).call();
+      setBalance(_balance / (10**18));
+      console.log(_balance);
+      const _footprint = await instance.methods.getFootPrint(account).call();
+      console.log(_footprint);
+    }
+
+    getBalanceAndFootprint();
+  }, [account]);
 
   const connect = () => {
     window.ethereum
@@ -49,14 +67,22 @@ const Header = ({instance, web3, account}) => {
             Compensate
           </button>
         </div>
-        <div className='d-flex align-items-center'>
-          <span>Balance: 10 GET</span>
-          <span style={{marginLeft: '20px'}}>Footprint: 5</span>
-        </div>
+        {/* <div className='d-flex align-items-center' style={{fontWeight: '700', color: '#f1b24a'}}>
+          <span>Balance: {balance} GET</span>
+          <span style={{marginLeft: '20px'}}>Footprint: {footprint}</span>
+        </div> */}
         <div className="d-flex flex-row-reverse header">
           <button onClick={connect} className={buttonClass} disabled={disabled}>
             Connect to wallet
           </button>
+          <div className='d-flex align-items-center' style={{fontWeight: '700', marginRight: '20px'}}>
+          <span className='balances' 
+            style={{backgroundColor: '#009879', marginRight: '10px'}}>Balance: {balance} GET
+          </span>
+          <span className='balances' 
+            style={{backgroundColor: 'tomato'}}>Footprint: {footprint}
+          </span>
+        </div>
         </div>
       </div>
     </nav>
