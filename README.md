@@ -107,13 +107,13 @@ What about edge conditions?
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/alexeipancratov/green-energy-tracker.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd green-energy-tracker
 ```
 
 Install dependencies
@@ -122,11 +122,21 @@ Install dependencies
   npm install
 ```
 
-Start the server
+Deploy the GreenEnergyToken smart contract to test blockchain (e.g., Ganache) and copy-paste the contract adddress to the "ui/src/contractAbis/greenEnergy.js" file
+
+Switch to the ui folder
 
 ```bash
-  npm run start
+  cd ui
 ```
+
+Run React UI locally
+
+```bash
+  npm start
+```
+
+You should be able to interact with the application.
 
 ## Authors
 
