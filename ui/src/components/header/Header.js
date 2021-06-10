@@ -35,7 +35,7 @@ const Header = ({instance, web3, account}) => {
   };
 
   return (
-    <nav style={{ backgroundColor: "wheat" }}>
+    <nav>
       <div className="d-flex justify-content-between">
         <div className="d-flex flex-row header">
           <button onClick={() => history.push("/")} className="btn link">

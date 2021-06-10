@@ -9,3 +9,66 @@ a {
   color: #fff;
   margin-right: 10px;
 }
+
+body {
+  background-image: linear-gradient(to right, #164a41, #4d774e);
+  color: #fff !important;
+}
+
+body .btn-primary {
+  background-color: #f1b24a;
+  border-color: #f1b24a;
+}
+
+body .btn-primary:hover {
+  background-color: #eda42b;
+  border-color: #eda42b;
+}
+
+/* History table */
+
+.history-table {
+  border-collapse: collapse;
+  font-size: 1em;
+  min-width: 1200px;
+  margin: 10px auto;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  table-layout: fixed;
+  text-align: center;
+}
+
+.history-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px 15px;
+}
+
+.history-table td .btn {
+  margin: 0 5px;
+}
+
+.history-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.history-table tbody tr:nth-of-type(odd) {
+  background-color: #ffffff;
+}
+
+.history-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.history-table tbody tr:hover {
+  background-color: #c6e8e1;
+}
+
+.history-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
