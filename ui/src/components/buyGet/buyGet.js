@@ -52,7 +52,9 @@ export default function BuyGet(props) {
           value: ethAmountUnits,
         })
         .on("receipt", (receipt) => {
-          alert(`Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`);
+          alert(
+            `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`
+          );
 
           setEthAmount("");
           setGetAmount("");
@@ -63,36 +65,44 @@ export default function BuyGet(props) {
 
   return (
     <>
-      <div id="buySection" className="text-center col">
-        <form className="buyForm" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="ethAmount">ETH to spend</label>
-            <input
-              type="text"
-              className="form-control"
-              id="ethAmount"
-              aria-describedby="emailHelp"
-              placeholder="0.00"
-              onChange={onEthAmountChange}
-              value={ethAmount}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="getAmount">GET to receive</label>
-            <input
-              type="text"
-              className="form-control"
-              id="getAmount"
-              placeholder="0.00"
-              onChange={onGetAmountChange}
-              value={getAmount}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Buy GET
-          </button>
-        </form>
-      </div>
+      <section className="col text-center">
+        <h2>Buy GET tokens</h2>
+      </section>
+      <section id="buySection" className="row">
+        <section id="buyGetFormSection" className="col text-center">
+          <form className="buyForm" onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="ethAmount">ETH to spend</label>
+              <input
+                type="text"
+                className="form-control"
+                id="ethAmount"
+                aria-describedby="emailHelp"
+                placeholder="0.00"
+                onChange={onEthAmountChange}
+                value={ethAmount}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="getAmount">GET to receive</label>
+              <input
+                type="text"
+                className="form-control"
+                id="getAmount"
+                placeholder="0.00"
+                onChange={onGetAmountChange}
+                value={getAmount}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Buy GET
+            </button>
+          </form>
+        </section>
+        <section className="col text-center">
+          <img src="img/buy.png" alt="green" width="600" />
+        </section>
+      </section>
       <div id="buyHistorySection">
         <h3>Buy history</h3>
         {buyEvents && buyEvents.length > 0 ? (
@@ -102,6 +112,7 @@ export default function BuyGet(props) {
                 <th>Receiver</th>
                 <th>Footprint at time of purchase</th>
                 <th>GET Amount (units)</th>
+                <th>GET Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -110,6 +121,7 @@ export default function BuyGet(props) {
                   <td>{e.returnValues.to}</td>
                   <td>{e.returnValues.footPrint}</td>
                   <td>{e.returnValues.amount}</td>
+                  <td>{`${e.returnValues.amount / Math.pow(10, 18)} GET`}</td>
                 </tr>
               ))}
             </tbody>

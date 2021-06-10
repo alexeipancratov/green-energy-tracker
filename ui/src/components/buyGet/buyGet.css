@@ -2,3 +2,9 @@
     display: inline-block;
     min-width: 350px;
 }
+
+#buyGetFormSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

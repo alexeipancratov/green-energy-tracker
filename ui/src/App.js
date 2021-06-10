@@ -39,27 +39,25 @@ function App() {
     <BrowserRouter>
       <Header />
       <div className="container">
-        <div className="row">
-          {!instance ? null : (
-            <Switch>
-              <Route
-                path="/"
-                component={() => (
-                  <BuyGet
-                    instance={instance}
-                    web3={web3Instance}
-                    account={account}
-                  />
-                )}
-                exact
-              />
-              <Route
-                path="/compensate"
-                component={() => <Compensate instance={instance} />}
-              />
-            </Switch>
-          )}
-        </div>
+        {!instance ? null : (
+          <Switch>
+            <Route
+              path="/"
+              component={() => (
+                <BuyGet
+                  instance={instance}
+                  web3={web3Instance}
+                  account={account}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/compensate"
+              component={() => <Compensate instance={instance} />}
+            />
+          </Switch>
+        )}
       </div>
     </BrowserRouter>
   );
