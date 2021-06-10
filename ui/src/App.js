@@ -7,8 +7,9 @@ import {
 } from "./contractAbis/greenEnergy";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import BuyGet from "./components/buyGet/buyGet";
-import Header from "./components/header/Header";
-import Compensate from "./components/compensate/Compensate";
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Compensate from './components/compensate/Compensate';
 
 function App() {
   const [instance, setInstance] = useState();
@@ -29,6 +30,7 @@ function App() {
           GREEN_ENERGY_CONTRACT_ADDRESS
         );
         setInstance(getInstance);
+        console.log(getInstance);
       }
     };
 
@@ -37,7 +39,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      {!instance ? null : <Header instance={instance}/>}
       <div className="container">
         {!instance ? null : (
           <Switch>
@@ -54,10 +56,11 @@ function App() {
             />
             <Route
               path="/compensate"
-              component={() => <Compensate instance={instance} />}
+              component={() => <Compensate instance={instance} account={account}/>}
             />
           </Switch>
         )}
+          <Footer />
       </div>
     </BrowserRouter>
   );
