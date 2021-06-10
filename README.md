@@ -130,7 +130,7 @@ Start the server
 
 - [@AleRapchan](https://www.github.com/AleRapchan)
 - [@Alexei Pancratov](https://github.com/alexeipancratov)
-- [@Michael Francis Jerome Victor](https://www.linkedin.com/in/michael-64/)
+- [@Michael Francis Jerome Victor](https://github.com/Mike-64)
 - [@Dhruvam Patel](https://github.com/dhruvampatel)
 
 ## Documentation
