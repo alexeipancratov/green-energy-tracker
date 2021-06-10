@@ -149,7 +149,6 @@ contract StandardERC20 is IERC20 {
     function _approve(address owner, address spender, uint256 amount) internal {
         require(spender != address(0),"ERC20: transfer from zero transfer");
         require(owner != address(0),"ERC20: transfer from zero transfer");
-        require(_balances[owner] >= amount, "ERC20: owner does not have enough amount");
         _allowances[owner][spender] = amount;
         emit Approval(owner, spender, amount);
     }
