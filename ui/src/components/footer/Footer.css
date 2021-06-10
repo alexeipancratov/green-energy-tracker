@@ -1,0 +1,17 @@
+.footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: wheat;
+    width: 100%;
+    padding: 5px 15px;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.url{
+    color: navy;
+}
+.url:hover{
+    color: blue;
+    cursor: pointer;
+}

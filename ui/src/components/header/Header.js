@@ -3,7 +3,7 @@ import "./header.css";
 import Web3 from "web3";
 import { useHistory } from "react-router-dom";
 
-const Header = () => {
+const Header = ({instance, web3, account}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
@@ -20,6 +20,7 @@ const Header = () => {
         }
       }
     };
+
     func();
   }, []);
 
@@ -47,6 +48,10 @@ const Header = () => {
           >
             Compensate
           </button>
+        </div>
+        <div className='d-flex align-items-center'>
+          <span>Balance: 10 GET</span>
+          <span style={{marginLeft: '20px'}}>Footprint: 5</span>
         </div>
         <div className="d-flex flex-row-reverse header">
           <button onClick={connect} className={buttonClass} disabled={disabled}>

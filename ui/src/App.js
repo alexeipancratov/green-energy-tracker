@@ -5,6 +5,7 @@ import { GREEN_ENERGY_CONTRACT_ADDRESS, GREEN_ENERGY_TOKEN_ABI } from './contrac
 import { Switch, Route, BrowserRouter } from "react-router-dom";
 import BuyGet from "./components/buyGet/buyGet";
 import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import Compensate from './components/compensate/Compensate';
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-          <Header />
+          <Header instance={instance} web3={web3Instance} account={account}/>
           {!instance ? null : <Switch>
             <Route
               path="/"
@@ -44,6 +45,7 @@ function App() {
               component={() => <Compensate instance={instance}/>}
             />
           </Switch>}
+          <Footer />
       </div>
     </BrowserRouter>
   );
