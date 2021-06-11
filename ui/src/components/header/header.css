@@ -32,8 +32,9 @@ nav .btn {
     top: 0;
     left: 0;
 }
-.link:hover {
-    background-color: #f1b24a;
+nav .link:hover {
+    background-color: #eda42b;
+    color: #fff;
 }
 .balances{
     padding: 5px 7px;
