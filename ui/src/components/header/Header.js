@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./header.css";
 import Web3 from "web3";
 import { useHistory } from "react-router-dom";
+import {BiWalletAlt} from 'react-icons/bi';
+import {AiOutlineFire} from 'react-icons/ai';
 
 const Header = ({instance, web3}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
+  const [buyColor, setBuyColor] = useState({backgroundColor: '#f1b24a'});
+  const [compensateColor, setCompensateColor] = useState({backgroundColor: '', marginLeft: "10px"});
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
   const [account, setAccount] = useState('');
@@ -31,12 +35,10 @@ const Header = ({instance, web3}) => {
   useEffect(() => {
     if(account === '') return;
     const getBalanceAndFootprint = async () => {
-      console.log(account);
       const _balance = await instance.methods.balanceOf(account).call();
       setBalance(_balance / (10**18));
-      console.log(_balance);
       const _footprint = await instance.methods.getFootPrint(account).call();
-      console.log(_footprint);
+      setBalance(_balance / (10**18));
     }
 
     getBalanceAndFootprint();
@@ -52,36 +54,45 @@ const Header = ({instance, web3}) => {
       .catch(console.error);
   };
 
+  const handleBuy = () => {
+    setBuyColor({backgroundColor: '#f1b24a'});
+    setCompensateColor({backgroundColor: '', marginLeft: "10px"});
+    history.push('/');
+  }
+
+  const handleCompensate = () => {
+    setCompensateColor({backgroundColor: '#f1b24a', marginLeft: "10px"});
+    setBuyColor({backgroundColor: ''});
+    history.push('/compensate');
+  }
+
   return (
     <nav>
       <div className="d-flex justify-content-between">
         <div className="d-flex flex-row header">
-          <button onClick={() => history.push("/")} className="btn link">
-            Buy
+          <button onClick={handleBuy} 
+            className="btn link" style={buyColor}>
+            Buy GET Token
           </button>
           <button
-            onClick={() => history.push("/compensate")}
+            onClick={handleCompensate}
             className="btn link"
-            style={{ marginLeft: "10px" }}
+            style={compensateColor}
           >
-            Compensate
+            Compensate Footprint
           </button>
         </div>
-        {/* <div className='d-flex align-items-center' style={{fontWeight: '700', color: '#f1b24a'}}>
-          <span>Balance: {balance} GET</span>
-          <span style={{marginLeft: '20px'}}>Footprint: {footprint}</span>
-        </div> */}
         <div className="d-flex flex-row-reverse header">
           <button onClick={connect} className={buttonClass} disabled={disabled}>
             Connect to wallet
           </button>
           <div className='d-flex align-items-center' style={{fontWeight: '700', marginRight: '20px'}}>
-          <span className='balances' 
-            style={{backgroundColor: '#009879', marginRight: '10px'}}>Balance: {balance} GET
-          </span>
-          <span className='balances' 
-            style={{backgroundColor: 'tomato'}}>Footprint: {footprint}
-          </span>
+            <span className='balances' 
+              style={{backgroundColor: '#009879', marginRight: '10px'}}><BiWalletAlt /> Balance: {balance} GET
+            </span>
+            <span className='balances' 
+              style={{backgroundColor: 'tomato'}}><AiOutlineFire /> Footprint: {footprint}
+            </span>
         </div>
         </div>
       </div>
