@@ -59,7 +59,7 @@ function App() {
             />
           </Switch>
         )}
-          <Footer />
+        <Footer />
       </div>
     </BrowserRouter>
   );

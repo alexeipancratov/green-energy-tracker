@@ -32,11 +32,16 @@ nav .btn {
     top: 0;
     left: 0;
 }
-.link:hover {
-    background-color: #f1b24a;
+nav .link:hover {
+    background-color: #eda42b;
+    color: #fff;
 }
 .balances{
     padding: 5px 7px;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15)
+}
+nav .link-active {
+    background-color: #f1b24a;
+    color: #fff;
 }
