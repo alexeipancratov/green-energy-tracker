@@ -22,9 +22,9 @@ export default function Compensate({instance, account}) {
           console.log(err);
         } else {
           console.log(event);
-          //Filter get only current company related events
-          let company = event.filter(e => e.returnValues.to === account);
-          setEvent((events) => [...events, company]);
+          if(event.returnValues.to === account){
+            setEvent((events) => [...events, event]);
+          }
         }
       }
     );
@@ -60,9 +60,10 @@ export default function Compensate({instance, account}) {
     }
 
     const tokenDecimals = await instance.methods.decimals().call();
+    console.log(tokenDecimals);
     const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
     
-    instance.methods.compensate(getAmountUnits)
+    instance.methods.compensate(getAmountUnits.toString()).send({from: account})
       .then(receipt => {
         alert(
           `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`

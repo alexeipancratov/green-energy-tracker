@@ -38,7 +38,7 @@ const Header = ({instance, web3}) => {
       const _balance = await instance.methods.balanceOf(account).call();
       setBalance(_balance / (10**18));
       const _footprint = await instance.methods.getFootPrint(account).call();
-      setBalance(_balance / (10**18));
+      setFootprint(_footprint / (10**18));
     }
 
     getBalanceAndFootprint();
