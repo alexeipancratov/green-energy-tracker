@@ -7,6 +7,8 @@ import {AiOutlineFire} from 'react-icons/ai';
 
 const Header = ({instance, web3}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
+  const [buyColor, setBuyColor] = useState({backgroundColor: '#f1b24a'});
+  const [compensateColor, setCompensateColor] = useState({backgroundColor: '', marginLeft: "10px"});
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
   const [account, setAccount] = useState('');
@@ -52,19 +54,32 @@ const Header = ({instance, web3}) => {
       .catch(console.error);
   };
 
+  const handleBuy = () => {
+    setBuyColor({backgroundColor: '#f1b24a'});
+    setCompensateColor({backgroundColor: '', marginLeft: "10px"});
+    history.push('/');
+  }
+
+  const handleCompensate = () => {
+    setCompensateColor({backgroundColor: '#f1b24a', marginLeft: "10px"});
+    setBuyColor({backgroundColor: ''});
+    history.push('/compensate');
+  }
+
   return (
     <nav>
       <div className="d-flex justify-content-between">
         <div className="d-flex flex-row header">
-          <button onClick={() => history.push("/")} className="btn link">
-            Buy
+          <button onClick={handleBuy} 
+            className="btn link" style={buyColor}>
+            Buy GET Token
           </button>
           <button
-            onClick={() => history.push("/compensate")}
+            onClick={handleCompensate}
             className="btn link"
-            style={{ marginLeft: "10px" }}
+            style={compensateColor}
           >
-            Compensate
+            Compensate Footprint
           </button>
         </div>
         <div className="d-flex flex-row-reverse header">

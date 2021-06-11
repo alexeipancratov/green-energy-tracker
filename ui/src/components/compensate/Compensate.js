@@ -52,9 +52,22 @@ export default function Compensate({instance, account}) {
     setGetAmount(getAmount);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if(getAmount === 0 || getAmount === ''){
+      alert('Fields cannot be empty or 0');
+      return;
+    }
 
+    const tokenDecimals = await instance.methods.decimals().call();
+    const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
+    
+    instance.methods.compensate(getAmountUnits)
+      .then(receipt => {
+        alert(
+          `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`
+        );
+      }).catch(err => console.error(err));
   };
 
   return (
