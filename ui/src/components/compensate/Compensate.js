@@ -6,7 +6,6 @@ import "./Compensate.css";
 export default function Compensate({instance, account}) {
   const [getAmount, setGetAmount] = useState("");
   const [balance, setBalance] = useState(0);
-  const [events, setEvents] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [event, setEvent] = useState([]);
   let web3;
@@ -76,6 +75,15 @@ export default function Compensate({instance, account}) {
                 onChange={onGetAmountChange}
                 value={getAmount}
               />
+              <label htmlFor="getAmount" className='mt-3'>Footprint to be compensated</label>
+              <input
+                type="text"
+                className="form-control"
+                id="getAmount"
+                placeholder="0.00"
+                onChange={onGetAmountChange}
+                value={getAmount}
+              />
             </div>
             <button type="submit" className="btn btn-primary">
               Pay GET
@@ -83,7 +91,7 @@ export default function Compensate({instance, account}) {
           </form>
         </section>
         <section className="col text-center">
-          <img src="img/compensate.png" alt="green" width="300" height="300"/>
+          <img src="img/compensate.png" alt="green" width="250" height="300"/>
         </section>
       </section>
       <div id="buyHistorySection">
