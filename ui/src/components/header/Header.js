@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./header.css";
 import Web3 from "web3";
-import { useHistory } from "react-router-dom";
 import {BiWalletAlt} from 'react-icons/bi';
 import {AiOutlineFire} from 'react-icons/ai';
 
 const Header = ({instance, web3}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
-  const [buyColor, setBuyColor] = useState({backgroundColor: '#f1b24a'});
-  const [compensateColor, setCompensateColor] = useState({backgroundColor: '', marginLeft: "10px"});
   const [disabled, setDisabled] = useState(false);
-  const history = useHistory();
   const [account, setAccount] = useState('');
   const [balance, setBalance] = useState(0);
   const [footprint, setFootprint] = useState(0);
@@ -33,7 +30,7 @@ const Header = ({instance, web3}) => {
   }, []);
 
   useEffect(() => {
-    if(account === '') return;
+    if (account === '') return;
     const getBalanceAndFootprint = async () => {
       const _balance = await instance.methods.balanceOf(account).call();
       setBalance(_balance / (10**18));
@@ -54,33 +51,16 @@ const Header = ({instance, web3}) => {
       .catch(console.error);
   };
 
-  const handleBuy = () => {
-    setBuyColor({backgroundColor: '#f1b24a'});
-    setCompensateColor({backgroundColor: '', marginLeft: "10px"});
-    history.push('/');
-  }
-
-  const handleCompensate = () => {
-    setCompensateColor({backgroundColor: '#f1b24a', marginLeft: "10px"});
-    setBuyColor({backgroundColor: ''});
-    history.push('/compensate');
-  }
-
   return (
     <nav>
       <div className="d-flex justify-content-between">
         <div className="d-flex flex-row header">
-          <button onClick={handleBuy} 
-            className="btn link" style={buyColor}>
-            Buy GET Token
-          </button>
-          <button
-            onClick={handleCompensate}
-            className="btn link"
-            style={compensateColor}
-          >
+          <NavLink to="/" className="btn link" exact activeClassName="link-active">
+            Buy GET tokens
+          </NavLink>
+          <NavLink to="/compensate" className="btn link" activeClassName="link-active">
             Compensate Footprint
-          </button>
+          </NavLink>
         </div>
         <div className="d-flex flex-row-reverse header">
           <button onClick={connect} className={buttonClass} disabled={disabled}>
