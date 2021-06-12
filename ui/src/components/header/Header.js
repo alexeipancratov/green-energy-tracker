@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import {BiWalletAlt} from 'react-icons/bi';
 import {AiOutlineFire} from 'react-icons/ai';
 
-const Header = ({instance, web3}) => {
+const Header = ({instance, web3, _balance, _footprint}) => {
   const [buttonClass, setButtonClass] = useState("btn btn-success position");
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
@@ -31,16 +31,10 @@ const Header = ({instance, web3}) => {
   }, []);
 
   useEffect(() => {
-    if(account === '') return;
-    const getBalanceAndFootprint = async () => {
-      const _balance = await instance.methods.balanceOf(account).call();
-      setBalance(_balance / (10**18));
-      const _footprint = await instance.methods.getFootPrint(account).call();
-      setFootprint(_footprint / (10**18));
-    }
-
-    getBalanceAndFootprint();
-  }, [account]);
+    console.log(`Header - ${_balance}`);
+    setBalance(_balance);
+    setFootprint(_footprint);
+  }, [_balance, _footprint]);
 
   const connect = () => {
     window.ethereum

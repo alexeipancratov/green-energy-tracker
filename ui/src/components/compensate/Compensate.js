@@ -5,8 +5,6 @@ import "./Compensate.css";
 
 export default function Compensate({instance, account}) {
   const [getAmount, setGetAmount] = useState("");
-  const [balance, setBalance] = useState(0);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [event, setEvent] = useState([]);
   let web3;
   let accounts;
@@ -37,7 +35,6 @@ export default function Compensate({instance, account}) {
         accounts = await web3.eth.getAccounts();
  
         if(accounts[0]){
-          setLoggedIn(true);
           console.log(accounts[0]);
           clearInterval(checkIfUserLoggedIn);
           loadData();
@@ -56,6 +53,10 @@ export default function Compensate({instance, account}) {
     e.preventDefault();
     if(getAmount === 0 || getAmount === ''){
       alert('Fields cannot be empty or 0');
+      return;
+    }
+    if(isNaN(getAmount)){
+      alert('Please enter number only');
       return;
     }
 
