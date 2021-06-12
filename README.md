@@ -22,7 +22,7 @@ Firstly, we intend to measure the footprint using IOTs device that will record t
 
 # Stakeholders
 
-A group of entrepreneurs and blockchain developers, all ex-students from the Blockchain course at George Brown College. A small team using cutting edge-technologies that want to revolutionize the way people work with green credit compensations actually.
+A group of entrepreneurs and blockchain developers, all ex-students from the Blockchain Development program at George Brown College. A small team using cutting edge-technologies that want to revolutionize the way people work with green credit compensations actually.
 
 With a tech background, we have electric engineers, computer engineers, computer scientists. Each one playing an important role in the deployment of this solution bringing accumulated knowledge and experiences.
 
