@@ -52,7 +52,7 @@ We will use some dummy contents to measure the result of this project, we will c
 
 Table: Example of footpint compensation performance
 
-# Restrictions (<<<)
+# Restrictions
 
 * Buyers can only buy credits within a 24 hours interval.
 
@@ -60,17 +60,6 @@ Table: Example of footpint compensation performance
 
 * Ownership cannot be changed. Clients need to negotiate directly with the Green Energy Source.
 
-* Are there restrictions by roles/users?
-
-* Are there any date/time restrictions?
-
-* Limitations by rules? (ex.: only 100 credits by user) Only
-
-* Calculated restrictions? Design patterns (limit the amount of money that could be compensated)
-
-* Financial and time constraints?
-
-​
 
 # Exceptions (normal flow and special cases)
 
