@@ -32,6 +32,7 @@ The main restriction of this project is the short time and the budget. It all wi
 
 We will use some dummy contents to measure the result of this project, we will consider it a success if our MVP could do all the transactions intended. With this application validated the stakeholders will then look after venture capital to prepare the solution to the market.
 
+
 # State Data
 
 * Token representation of green source certificates needed to compensate footprints.
@@ -50,7 +51,6 @@ We will use some dummy contents to measure the result of this project, we will c
 
 * We will provide a mobile interface to buy credits online.
 
-Table: Example of footpint compensation performance
 
 # Restrictions
 
@@ -61,19 +61,12 @@ Table: Example of footpint compensation performance
 * Ownership cannot be changed. Clients need to negotiate directly with the Green Energy Source.
 
 
-# Exceptions (normal flow and special cases)
+# Exceptions
 
 * The owner can negotiate credits between clients.
 
 * The owner can allow more buys from the client inside each month.
 
-* Can any of the rules be broken under certain circumstances?
-
-* Must be said ahead of time. To overwrite the rules.
-
-* Should any new rules be added in certain circumstances
-
-* What about edge conditions?
 
 ## Tech Stack
 
