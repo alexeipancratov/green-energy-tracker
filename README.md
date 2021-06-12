@@ -82,17 +82,17 @@ Financial and time constraints?
 
 # Exceptions (normal flow and special cases)
 
-The owner can negotiate credits between clients.
+* The owner can negotiate credits between clients.
 
-The owner can allow more buys from the client inside each month.
+* The owner can allow more buys from the client inside each month.
 
-Can any of the rules be broken under certain circumstances?
+* Can any of the rules be broken under certain circumstances?
 
-Must be said ahead of time. To overwrite the rules.
+* Must be said ahead of time. To overwrite the rules.
 
-Should any new rules be added in certain circumstances
+* Should any new rules be added in certain circumstances
 
-What about edge conditions?
+* What about edge conditions?
 
 ## Tech Stack
 
