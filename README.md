@@ -4,11 +4,7 @@
 
 ## Goals
 
-A system that creates a blockchain record representing compensated footprint that can be used to show authenticity.
-
-Record a timestamp on Ethereum to show the records of compensated footprint.
-
-Be able to prove ownership from credits of a green energy source.
+The Green Energy Tracker System is a system that creates a blockchain record representing compensated footprint that can be used to show authenticity. It records a timestamp on Ethereum to show the records of compensated footprint and is able to prove ownership from credits of a green energy source.
 
 The stakeholders are trying to achieve a tracker system that can certify the compensation of buyers of the output from a green energy source. There’s no pre-existent software offering this kind of solution to track client’s energy footprint at the moment and the stakeholders want to utilize cutting-edge technology to address that problem.
 
@@ -26,11 +22,9 @@ Firstly, we intend to measure the footprint using IOTs device that will record t
 
 # Stakeholders
 
-Owner of the timestamp contract
+Owners of the timestamp contract.
 
-Anonymous accounts that file a timestamp
-
-A group of entrepreneurs, all ex-students from the Blockchain course at George Brown College. A small team using cutting edge-technologies that want to revolutionize the way people work with green credit compensations actually.
+A group of entrepreneurs and blockchain developers, all ex-students from the Blockchain course at George Brown College. A small team using cutting edge-technologies that want to revolutionize the way people work with green credit compensations actually.
 
 With a tech background, we have electric engineers, computer engineers, computer scientists. Each one playing an important role in the deployment of this solution bringing accumulated knowledge and experiences.
 
