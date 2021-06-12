@@ -121,11 +121,8 @@ You should be able to interact with the application.
 
 ## Documentation
 
-[Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/)
+A full documentation with more details, scrrenshots, diagrams and etc, could be found in this link: [Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/).
 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## Support
 
