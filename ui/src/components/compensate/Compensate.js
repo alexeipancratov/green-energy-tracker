@@ -8,7 +8,6 @@ export default function Compensate({instance, account}) {
 
   useEffect(() => {
     const loadData = async () => {
-      console.log("Events");
       instance.events.Compensate(
         {},
         { fromBlock: 0, to: "latest" },

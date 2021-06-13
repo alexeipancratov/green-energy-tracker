@@ -16,7 +16,7 @@ export default function BuyGet({instance, account, web3}) {
           if (err) {
             console.log(err);
           } else {
-            if (event.returnValues.to?.toLowerCase() === account.toLowerCase()) {
+            if (event.returnValues.to.toLowerCase() === account.toLowerCase()) {
               setBuyEvents((events) => [...events, event]);
             }
           }

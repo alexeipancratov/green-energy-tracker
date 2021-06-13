@@ -26,6 +26,8 @@ function App() {
 
             const web3 = new Web3(window.ethereum);
             setWeb3Instance(web3);
+            
+            window.ethereum.on("accountsChanged", accounts => setAccount(accounts[0] || ''));
 
             const getInstance = new web3.eth.Contract(
               GREEN_ENERGY_TOKEN_ABI,
