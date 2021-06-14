@@ -17,8 +17,9 @@ export default function Compensate({instance, account}) {
           } else {
             console.log(event);
             // Filter get only current company related events
-            let company = event.filter(e => e.returnValues.to === account);
-            setEvent((events) => [...events, company]);
+            if(event.returnValues.to.toLowerCase() === account.toLowerCase()){
+              setEvent((events) => [...events, event]);
+            }
           }
         }
       );

@@ -65,7 +65,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {!instance ? null : <Header instance={instance} />}
+      {!instance ? null : <Header instance={instance} _balance={balance} _footprint={footprint}/>}
       <div className="container">
         {!instance ? null : (
           <Switch>
