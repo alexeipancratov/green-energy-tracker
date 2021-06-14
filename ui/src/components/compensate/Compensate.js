@@ -17,8 +17,9 @@ export default function Compensate({instance, account}) {
           } else {
             console.log(event);
             // Filter get only current company related events
-            let company = event.filter(e => e.returnValues.to === account);
-            setEvent((events) => [...events, company]);
+            if(event.returnValues.to.toLowerCase() === account.toLowerCase()){
+              setEvent((events) => [...events, event]);
+            }
           }
         }
       );
@@ -39,11 +40,16 @@ export default function Compensate({instance, account}) {
       alert('Fields cannot be empty or 0');
       return;
     }
+    if(isNaN(getAmount)){
+      alert('Please enter number only');
+      return;
+    }
 
     const tokenDecimals = await instance.methods.decimals().call();
+    console.log(tokenDecimals);
     const getAmountUnits = getAmount * Math.pow(10, tokenDecimals);
     
-    instance.methods.compensate(getAmountUnits)
+    instance.methods.compensate(getAmountUnits.toString()).send({from: account})
       .then(receipt => {
         alert(
           `Success!\nTransaction hash ${receipt.transactionHash}\nGas used: ${receipt.gasUsed}`

@@ -15,6 +15,8 @@ function App() {
   const [instance, setInstance] = useState();
   const [web3Instance, setWeb3Instance] = useState();
   const [account, setAccount] = useState();
+  const [balance, setBalance] = useState(0);
+  const [footprint, setFootprint] = useState(0);
 
   useEffect(() => {
     const createInstance = async () => {
@@ -42,9 +44,28 @@ function App() {
     createInstance();
   }, []);
 
+  //subscribing to updates regarding balance and footprint
+  useEffect(() => {
+    if(instance !== undefined){
+      setInterval(() => {
+        updateBalances();
+      }, 2000);
+    }
+  }, [instance]);
+
+  const updateBalances = async () => {
+    const _balance = await instance.methods.balanceOf(account).call();
+    const _footprint = await instance.methods.getFootPrint(account).call();
+    
+    if(_balance !== balance || _footprint !== footprint){
+      setBalance(_balance / (10**18));
+      setFootprint(_footprint / (10**18));
+    }
+  }
+
   return (
     <BrowserRouter>
-      {!instance ? null : <Header instance={instance} />}
+      {!instance ? null : <Header instance={instance} _balance={balance} _footprint={footprint}/>}
       <div className="container">
         {!instance ? null : (
           <Switch>

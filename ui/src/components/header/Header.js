@@ -4,22 +4,27 @@ import "./header.css";
 import { BiWalletAlt } from "react-icons/bi";
 import { AiOutlineFire } from "react-icons/ai";
 
-const Header = ({ instance, account }) => {
+const Header = ({ instance, account, _footprint, _balance }) => {
   const [balance, setBalance] = useState(0);
   const [footprint, setFootprint] = useState(0);
 
+  // useEffect(() => {
+  //   if (!account) return;
+
+  //   const getBalanceAndFootprint = async () => {
+  //     const _balance = await instance.methods.balanceOf(account).call();
+  //     setBalance(_balance / 10 ** 18);
+  //     const _footprint = await instance.methods.getFootPrint(account).call();
+  //     setFootprint(_footprint / 10 ** 18);
+  //   };
+
+  //   getBalanceAndFootprint();
+  // }, [account, instance]);
+
   useEffect(() => {
-    if (!account) return;
-
-    const getBalanceAndFootprint = async () => {
-      const _balance = await instance.methods.balanceOf(account).call();
-      setBalance(_balance / 10 ** 18);
-      const _footprint = await instance.methods.getFootPrint(account).call();
-      setFootprint(_footprint / 10 ** 18);
-    };
-
-    getBalanceAndFootprint();
-  }, [account, instance]);
+    setBalance(_balance);
+    setFootprint(_footprint);
+  }, [_footprint, _balance]);
 
   return (
     <nav>
