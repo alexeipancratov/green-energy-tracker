@@ -97,10 +97,9 @@ contract GreenEnergyToken is StandardERC20{
     /// @param amount amount of tokens the company wants to compensate
     function compensate(uint amount) public{        
         require(balanceOf(msg.sender)>= amount);
-        //_transfer(msg.sender,address(this),amount);
         _burn(msg.sender,amount);
         footprintGenerated[msg.sender] -=amount;
-        emit Compensate(msg.sender,footprintGenerated[msg.sender], amount);
+        emit Compensate(msg.sender,amount, amount);
     }
 
     /// @notice Approve an IOT device for the company
