@@ -16,7 +16,7 @@ export default function BuyGet({instance, account, web3}) {
           if (err) {
             console.log(err);
           } else {
-            if (event.returnValues.to === account) {
+            if (event.returnValues.to.toLowerCase() === account.toLowerCase()) {
               setBuyEvents((events) => [...events, event]);
             }
           }
@@ -24,7 +24,7 @@ export default function BuyGet({instance, account, web3}) {
       );
     };
     func();
-  }, [instance.events, account]);
+  }, [instance, account]);
 
   const onEthAmountChange = (e) => {
     const ethAmount = e.target.value;

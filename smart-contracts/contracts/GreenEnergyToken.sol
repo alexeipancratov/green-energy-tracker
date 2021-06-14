@@ -33,6 +33,7 @@ contract GreenEnergyToken is StandardERC20{
         require(msg.sender == owner);
         _;
     }
+    
     /// @notice Modifier used to restrict the permission to the owner of the contract.
     /// @dev restricts the functionality to IOT address
     /// @param company address of the buyer
