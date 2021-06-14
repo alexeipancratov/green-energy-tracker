@@ -1,47 +1,31 @@
 import React, { useEffect, useState } from "react";
-import Web3 from "web3";
 import { getShortAddress } from "../../utils/addressUtils";
 import "./Compensate.css";
 
 export default function Compensate({instance, account}) {
   const [getAmount, setGetAmount] = useState("");
   const [event, setEvent] = useState([]);
-  let web3;
-  let accounts;
-  let erc20Instance = instance;
-
-  const loadData = async () => {
-    console.log("Events");
-    erc20Instance.events.Compensate(
-      {},
-      { fromBlock: 0, to: "latest" },
-      (err, event) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(event);
-          if(event.returnValues.to === account){
-            setEvent((events) => [...events, event]);
-          }
-        }
-      }
-    );
-  }
 
   useEffect(() => {
-    const checkIfUserLoggedIn = setInterval(async () => {
-      if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-        accounts = await web3.eth.getAccounts();
- 
-        if(accounts[0]){
-          console.log(accounts[0]);
-          clearInterval(checkIfUserLoggedIn);
-          loadData();
+    const loadData = async () => {
+      instance.events.Compensate(
+        {},
+        { fromBlock: 0, to: "latest" },
+        (err, event) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(event);
+            // Filter get only current company related events
+            let company = event.filter(e => e.returnValues.to === account);
+            setEvent((events) => [...events, company]);
+          }
         }
-      }
-    }, 1000);
-  }, []);
+      );
+    }
+
+    loadData();
+  }, [account, instance]);
 
   const onGetAmountChange = (e) => {
     const getAmount = e.target.value;
@@ -51,7 +35,7 @@ export default function Compensate({instance, account}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(getAmount === 0 || getAmount === ''){
+    if (getAmount === 0 || getAmount === '') {
       alert('Fields cannot be empty or 0');
       return;
     }

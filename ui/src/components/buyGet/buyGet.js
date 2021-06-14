@@ -16,7 +16,7 @@ export default function BuyGet({instance, account, web3}) {
           if (err) {
             console.log(err);
           } else {
-            if (event.returnValues.to === account) {
+            if (event.returnValues.to.toLowerCase() === account.toLowerCase()) {
               setBuyEvents((events) => [...events, event]);
             }
           }
@@ -24,7 +24,7 @@ export default function BuyGet({instance, account, web3}) {
       );
     };
     func();
-  }, [instance.events, account]);
+  }, [instance, account]);
 
   const onEthAmountChange = (e) => {
     const ethAmount = e.target.value;
@@ -69,7 +69,7 @@ export default function BuyGet({instance, account, web3}) {
   return (
     <>
       <section className="col text-center">
-        <h2>Buy GET tokens</h2>
+        <h2>Buy GET Tokens</h2>
       </section>
       <section id="buySection" className="row">
         <section id="buyGetFormSection" className="col text-center">
@@ -107,7 +107,7 @@ export default function BuyGet({instance, account, web3}) {
         </section>
       </section>
       <div id="buyHistorySection">
-        <h3>Buy history</h3>
+        <h3>GET Purchase History</h3>
         {buyEvents && buyEvents.length > 0 ? (
           <table className="history-table table table-hover">
             <thead>
