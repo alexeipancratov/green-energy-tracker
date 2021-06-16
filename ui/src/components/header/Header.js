@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import "./header.css";
 import { BiWalletAlt } from "react-icons/bi";
 import { AiOutlineFire } from "react-icons/ai";
+import "./header.css";
 
-const Header = ({ instance, account}) => {
+const Header = ({instance, account}) => {
   const [balance, setBalance] = useState(0);
   const [footprint, setFootprint] = useState(0);
 
   //subscribing to updates regarding balance and footprint
   useEffect(() => {
-    if(instance !== undefined){
+    const updateBalances = async () => {
+      const _balance = await instance.methods.balanceOf(account).call();
+      const _footprint = await instance.methods.getFootPrint(account).call();
+      
+      setBalance(_balance / (10**18));
+      setFootprint(_footprint / (10**18));
+    }
+
+    if (instance && account) {
       setInterval(() => {
         updateBalances();
       }, 2000);
     }
-  }, []);
-
-  const updateBalances = async () => {
-    const _balance = await instance.methods.balanceOf(account).call();
-    const _footprint = await instance.methods.getFootPrint(account).call();
-    
-    if(_balance !== balance || _footprint !== footprint){
-      setBalance(_balance / (10**18));
-      setFootprint(_footprint / (10**18));
-    }
-  }
+  }, [instance, account]);
 
   return (
     <nav>
