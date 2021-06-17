@@ -3,7 +3,7 @@
 
 ## Documentation
 
-A full documentation with more details, scrrenshots, diagrams and etc, could be found in this link: [Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/).
+A full documentation with more details, screenshots, diagrams and etc, can be found at: [Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/).
 
 ## Goals
 
