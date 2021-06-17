@@ -1,6 +1,9 @@
+# Green Energy Tracker System
 ![Logo](https://gblobscdn.gitbook.com/spaces%2F-MbU7GF9p1m1WWm8eWyQ%2Favatar-1622948815179.png?alt=media)
 
-# Green Energy Tracker System
+## Documentation
+
+A full documentation with more details, scrrenshots, diagrams and etc, could be found in this link: [Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/).
 
 ## Goals
 
@@ -118,10 +121,6 @@ You should be able to interact with the application.
 - [@Alexei Pancratov](https://github.com/alexeipancratov)
 - [@Michael Francis Jerome Victor](https://github.com/Mike-64)
 - [@Dhruvam Patel](https://github.com/dhruvampatel)
-
-## Documentation
-
-A full documentation with more details, scrrenshots, diagrams and etc, could be found in this link: [Full Documentation](https://rapchan.gitbook.io/green-energy-tracker/).
 
 
 ## Support
