@@ -18,6 +18,7 @@ contract GreenEnergyToken is StandardERC20{
     mapping(address=>address) approvedIot;
     
     /// @notice State variable for address of contract owner
+    /// @dev address of the contract owner
     /// @return Address of the contract owner
     address public owner;
     
@@ -85,6 +86,7 @@ contract GreenEnergyToken is StandardERC20{
     }
 
     /// @notice Retrieve the address of the IOT Device of a company
+    /// @dev Returns the address of the IOT dec
     /// @param company address of the company
     /// @return address of the IOT device approved by the company
     function getIOT(address company) public view returns(address){
@@ -111,9 +113,11 @@ contract GreenEnergyToken is StandardERC20{
     }
     
     /// @notice Change the ownership of contract
+    /// @dev Function to change the owner of the contract
     /// @param newOwner address of the new owner
-    function changeOwner(address newOwner) public {
+    function changeOwner(address newOwner) public returns(bool){
         require(owner == msg.sender);
         owner = newOwner;
+        return true;
     }
 }

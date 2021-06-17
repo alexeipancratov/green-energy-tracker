@@ -31,6 +31,9 @@ interface IERC20 {
      * zero by default.
      *
      * This value changes when {approve} or {transferFrom} are called.
+     * 
+     * @param owner address of owner
+     * @param spender address of spender
      */
     function allowance(address owner, address spender) external view returns (uint256);
 
@@ -47,6 +50,10 @@ interface IERC20 {
      * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
      *
      * Emits an {Approval} event.
+     * 
+     * @param spender address of the spender
+     * @param amount amount of tokens to be approved to the spender
+     * 
      */
     function approve(address spender, uint256 amount) external returns (bool);
 
@@ -97,40 +104,78 @@ contract StandardERC20 is IERC20 {
         emit Transfer(address(0),msg.sender,_totalSupply);
     }
     
+    /// @notice Function to get the name of the Token
+    /// @dev returns the name of the token
+    /// @return name of the Token
     function name() public view returns (string memory) {
         return _name;
     }
     
+    /// @notice Function to get the Symbol of the Token
+    /// @dev returns the Symbol of the token
+    /// @return symbol of the Token
     function symbol() public view  returns (string memory){
         return _symbol;
     }
     
+    /// @notice Function to get the decimals of the Token
+    /// @dev returns the decimals of the token
+    /// @return decimals of the Token
     function decimals() public view returns(uint8) {
         return _decimals;
     }
     
+    /// @notice Function to get total supply of the Token
+    /// @dev returns the total supply of the token
+    /// @return totalSupply of the Token
     function totalSupply() public view override returns (uint256) {
         return _totalSupply;
     }
     
+
+    /// @notice Function to get balance of the Token holder
+    /// @dev returns the balance amount of the token holder
+    /// @param account address of the account
+    /// @return balance amount in an account
     function balanceOf(address account) public view override returns (uint256) {
         return _balances[account];
     }
     
+    /// @notice Function to transfer a specified amount to another address
+    /// @dev Function to transfer a specified amount to another address
+    /// @param recipient address of the recipient
+    /// @param amount amount of tokens to be transferred
+    /// @return boolean status of transfer; true if transfer succeeds and false if not
     function transfer(address recipient, uint256 amount) public override returns (bool) {
         _transfer(msg.sender, recipient,amount );
         return true;
     }
     
+    /// @notice Function to approve another account to transfer from the callers account
+    /// @dev Function to approve another account to transfer from the callers account
+    /// @param spender address of the spender
+    /// @param amount amount of tokens to be approved to the spender
+    /// @return boolean status of approval; true if transfer succeeds and false if not
     function approve(address spender, uint256 amount) public override returns (bool) {
         _approve(msg.sender, spender, amount);
         return true;
     }
     
+    /// @notice Function to get the allowances of an approved acccount
+    /// @dev gets the allowances of the approved acccount
+    /// @param spender address of the spender
+    /// @param owner address of the owner
+    /// @return  the amount of tokens approved for the spender
     function allowance(address owner, address spender) public override view returns(uint256) {
         return _allowances[owner][spender];
     } 
     
+    /// @notice Function to send certain amount of tokens from one account to another account
+    /// @dev facilitates transfer between two accounts other than the caller.
+    /// @param sender address of the sender
+    /// @param recipient address of the recipient
+    /// @param amount amount of tokens to be sent
+    /// @return boolean status of transfer; true if transfer succeeds and false if not
     function transferFrom(address sender, address recipient, uint256 amount) public override returns(bool) {
         _transfer(sender, recipient, amount);
         _approve(sender, msg.sender, _allowances[sender][msg.sender] - amount);
